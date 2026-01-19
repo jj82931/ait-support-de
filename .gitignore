@@ -1,1 +1,10 @@
 .env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.python-version
+.DS_Store
+replacement_evidence/
+vectorstore/
+*.csv
