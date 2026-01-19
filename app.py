@@ -338,6 +338,26 @@ def load_vector_store():
         except Exception as e:
             print(f"Error loading index: {e}")
             return None
+    default_manual = os.path.join("doc", "manual.pdf")
+    if os.path.exists(default_manual):
+        try:
+            loader = PyPDFLoader(default_manual)
+            documents = loader.load()
+            text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
+            docs = text_splitter.split_documents(documents)
+            embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+            vector_store = FAISS.from_documents(docs, embeddings)
+            vector_store.save_local(INDEX_PATH)
+            metadata_dir = os.path.dirname(INDEX_PATH)
+            if not os.path.exists(metadata_dir):
+                os.makedirs(metadata_dir)
+            metadata_path = os.path.join(metadata_dir, "source_files.txt")
+            with open(metadata_path, "a", encoding="utf-8") as f:
+                f.write("manual.pdf\n")
+            return vector_store
+        except Exception as e:
+            print(f"Error building index from manual: {e}")
+            return None
     return None
 
 def process_document(uploaded_file):
