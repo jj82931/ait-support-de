@@ -57,6 +57,16 @@ import streamlit.components.v1 as components
 # Load environment variables
 load_dotenv()
 
+AEST_TZ = pytz.timezone("Australia/Sydney")
+
+def aest_now():
+    """Return current time in AEST (Australia/Sydney)."""
+    return datetime.datetime.now(AEST_TZ)
+
+def aest_now_naive():
+    """Return naive datetime in AEST for cache comparisons."""
+    return aest_now().replace(tzinfo=None)
+
 def classify_topic(question, llm):
     """Classify the user question into predefined categories."""
     categories = ["Hardware (Scanner/Printer)", "Network/VPN", "SAP/Software", "Account/Auth", "Other"]
@@ -170,7 +180,7 @@ def validate_evidence_files(files):
 def generate_ticket_id(kind):
     """Generate a short ticket id."""
     prefix = TICKET_PREFIXES.get(kind, "TCK")
-    stamp = datetime.datetime.now().strftime("%Y%m%d")
+    stamp = aest_now().strftime("%Y%m%d")
     rand = str(random.randint(1000, 9999))
     return f"{prefix}-{stamp}-{rand}"
 
@@ -191,27 +201,34 @@ def get_or_create_ticket(kind, issue_context, prompt_text=""):
     """Return existing ticket id within dedupe window or create a new one."""
     issue_key = f"{kind}:{issue_context.strip().lower()}"
     cache = st.session_state.ticket_cache
-    now = datetime.datetime.now()
+    now = aest_now_naive()
+
+    def age_minutes(ts):
+        if not isinstance(ts, datetime.datetime):
+            return None
+        if ts.tzinfo is not None:
+            ts = ts.astimezone(AEST_TZ).replace(tzinfo=None)
+        return (now - ts).total_seconds() / 60.0
 
     # If user asks for ticket number, reuse the most recent ticket of this kind.
     if is_ticket_id_request(prompt_text):
         recent = cache.get(f"{kind}:_last")
         if recent:
-            age_minutes = (now - recent["ts"]).total_seconds() / 60.0
-            if age_minutes <= TICKET_DEDUPE_MINUTES:
+            minutes = age_minutes(recent["ts"])
+            if minutes is not None and minutes <= TICKET_DEDUPE_MINUTES:
                 return recent["ticket_id"], False
 
     entry = cache.get(issue_key)
     if entry:
-        age_minutes = (now - entry["ts"]).total_seconds() / 60.0
-        if age_minutes <= TICKET_DEDUPE_MINUTES:
+        minutes = age_minutes(entry["ts"])
+        if minutes is not None and minutes <= TICKET_DEDUPE_MINUTES:
             return entry["ticket_id"], False
 
     # Fallback: reuse last ticket of the same kind within window
     recent = cache.get(f"{kind}:_last")
     if recent:
-        age_minutes = (now - recent["ts"]).total_seconds() / 60.0
-        if age_minutes <= TICKET_DEDUPE_MINUTES:
+        minutes = age_minutes(recent["ts"])
+        if minutes is not None and minutes <= TICKET_DEDUPE_MINUTES:
             return recent["ticket_id"], False
 
     ticket_id = generate_ticket_id(kind)
@@ -227,7 +244,7 @@ def save_evidence_files(files, ticket_id):
     if client is None:
         os.makedirs(REPLACEMENT_EVIDENCE_DIR, exist_ok=True)
     saved = []
-    timestamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    timestamp = aest_now().strftime("%Y%m%d-%H%M%S")
     for f in files:
         safe_name = "".join(ch if ch.isalnum() or ch in ("-", "_", ".") else "_" for ch in f.name)
         safe_ticket = "".join(ch if ch.isalnum() or ch in ("-", "_") else "_" for ch in str(ticket_id))
@@ -1032,7 +1049,7 @@ with st.sidebar:
                     f"Conversation:\n{history_text}"
                 )
                 summary = llm.invoke(report_prompt).content.strip()
-                today = datetime.datetime.now().strftime("%Y-%m-%d")
+                today = aest_now().strftime("%Y-%m-%d")
                 df_hp = load_high_priority_tickets()
                 if not df_hp.empty:
                     pending_hp = df_hp[df_hp["Status"] == "Pending"]
@@ -1483,7 +1500,7 @@ if prompt := st.chat_input("How can I help you today?"):
                             st.link_button("Open High Priority Ticket Demo", DEMO_HIGH_PRIORITY_URL, use_container_width=True)
                         else:
                             st.info("Support Ticket Draft")
-                            timestamp = datetime.datetime.now().strftime("%Y%m%d-%H%M")
+                            timestamp = aest_now().strftime("%Y%m%d-%H%M")
 
                             # Reuse summarized context for the ticket draft
 

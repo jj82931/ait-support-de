@@ -2,6 +2,7 @@ import csv
 import datetime
 import os
 import pandas as pd
+import pytz
 
 from config import (
     LOG_FILE,
@@ -11,6 +12,11 @@ from config import (
     AUTH_DB_FILE,
 )
 from data.db import get_supabase_client
+
+
+def aest_now():
+    """Return current time in AEST (Australia/Sydney)."""
+    return datetime.datetime.now(pytz.timezone("Australia/Sydney"))
 
 
 def init_log_file():
@@ -25,7 +31,7 @@ def log_interaction(question, category, resolved, user_name, user_dept):
     client = get_supabase_client()
     if client:
         client.table("chat_logs").insert({
-            "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "timestamp": aest_now().strftime("%Y-%m-%d %H:%M:%S"),
             "user_name": user_name,
             "user_dept": user_dept,
             "user_question": question,
@@ -34,7 +40,7 @@ def log_interaction(question, category, resolved, user_name, user_dept):
         }).execute()
         return
     init_log_file()
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = aest_now().strftime("%Y-%m-%d %H:%M:%S")
     with open(LOG_FILE, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         writer.writerow([timestamp, user_name, user_dept, question, category, resolved])
@@ -142,7 +148,7 @@ def log_replacement_request(user_name, user_dept, device, reason, asset_tag="", 
     client = get_supabase_client()
     if client:
         client.table("replacement_requests").insert({
-            "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "timestamp": aest_now().strftime("%Y-%m-%d %H:%M:%S"),
             "user_name": user_name,
             "user_dept": user_dept,
             "device": device,
@@ -155,7 +161,7 @@ def log_replacement_request(user_name, user_dept, device, reason, asset_tag="", 
             "ticket_id": ticket_id,
         }).execute()
         return
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = aest_now().strftime("%Y-%m-%d %H:%M:%S")
     init_replacement_log_file()
     with open(REPLACEMENT_LOG_FILE, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
@@ -256,7 +262,7 @@ def log_escalation_event(user_name, user_dept, question, esc_type, ticket_id="")
     client = get_supabase_client()
     if client:
         client.table("escalation_reviews").insert({
-            "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "timestamp": aest_now().strftime("%Y-%m-%d %H:%M:%S"),
             "user_name": user_name,
             "user_dept": user_dept,
             "user_question": question,
@@ -268,7 +274,7 @@ def log_escalation_event(user_name, user_dept, question, esc_type, ticket_id="")
         }).execute()
         return
     init_escalation_log_file()
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = aest_now().strftime("%Y-%m-%d %H:%M:%S")
     with open(ESCALATION_LOG_FILE, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         writer.writerow([timestamp, user_name, user_dept, question, esc_type, "Pending", "", "", ticket_id])
@@ -336,7 +342,7 @@ def log_high_priority_ticket(user_name, user_dept, issue_summary, ticket_id=""):
     client = get_supabase_client()
     if client:
         client.table("high_priority_tickets").insert({
-            "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "timestamp": aest_now().strftime("%Y-%m-%d %H:%M:%S"),
             "user_name": user_name,
             "user_dept": user_dept,
             "issue_summary": issue_summary,
@@ -346,7 +352,7 @@ def log_high_priority_ticket(user_name, user_dept, issue_summary, ticket_id=""):
         }).execute()
         return
     init_high_priority_log_file()
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = aest_now().strftime("%Y-%m-%d %H:%M:%S")
     with open(HIGH_PRIORITY_LOG_FILE, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         writer.writerow([timestamp, user_name, user_dept, issue_summary, "Pending", "", ticket_id])
