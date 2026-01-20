@@ -1,8 +1,5 @@
 # ait-support-de for ICB Group PTY LTD
 
-Writer: Chaeyeon Im
-Email: jj49408293@gmail.com
-
 [AIT Support] Final Project Report 
 Project Title: AIT Support (AI-Driven IT Infrastructure & Operations System)
 Target Environment: Fast-Moving Consumer Goods (FMCG) Warehouse & Corporate Office
