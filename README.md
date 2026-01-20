@@ -11,21 +11,21 @@ AIT Support bridges this gap by combining AI-driven triage with strict operation
 ________________________________________
 # 2. Problem Statement
 In a continuously operating warehouse, IT friction translates directly to business loss.
- •	Cost of Downtime: When critical hardware (scanners, label printers) fails, operations stop until IT arrives.
- o	Context: According to ITIC (2024), 90% of enterprises report that a single hour of downtime costs over $300,000, highlighting the financial criticality of rapid resolution [1].
- •	Inefficient Resource Allocation: Skilled IT staff are often bogged down by repetitive, low-value requests.
- o	Context: Gartner research indicates that up to 40% of all help desk calls are related to password resets and account lockouts [2]. Furthermore, Forrester estimates the labor cost for a single password reset incident at approximately $70 [3].
- •	Shift Handover Risks: Critical information is often lost between shifts, leading to recurring issues.
- o	Context: Studies show that 80% of serious operational errors involve miscommunication during shift handovers [4].
- •	Information Retrieval Waste: Workers spend excessive time searching for SOPs or manuals.
- o	Context: A recent Atlassian report reveals that Australian knowledge workers spend nearly 23.5% (approx. 10 hours) of their work week just searching for information [5].
+- Cost of Downtime: When critical hardware (scanners, label printers) fails, operations stop until IT arrives.
+- Context: According to ITIC (2024), 90% of enterprises report that a single hour of downtime costs over $300,000, highlighting the financial criticality of rapid resolution [1].
+- Inefficient Resource Allocation: Skilled IT staff are often bogged down by repetitive, low-value requests.
+- Context: Gartner research indicates that up to 40% of all help desk calls are related to password resets and account lockouts [2]. Furthermore, Forrester estimates the labor cost for a single password reset incident at approximately $70 [3].
+- Shift Handover Risks: Critical information is often lost between shifts, leading to recurring issues.
+- Context: Studies show that 80% of serious operational errors involve miscommunication during shift handovers [4].
+- Information Retrieval Waste: Workers spend excessive time searching for SOPs or manuals.
+- Context: A recent Atlassian report reveals that Australian knowledge workers spend nearly 23.5% (approx. 10 hours) of their work week just searching for information [5].
 ________________________________________
 # 3. Technical Architecture
 Built on a Modern Data Stack to ensure reliability, auditability, and scalability.
-•	Frontend: Streamlit with a custom 'Dockyard Console' theme, optimized for high visibility and ease of use in warehouse environments (gloved operation friendly).
-•	Backend: Supabase (PostgreSQL) for relational management of logs, tickets, replacement history, and user roles.
-•	AI Engine: Google Gemini (via LangChain) coupled with FAISS for Vector Search. This RAG (Retrieval-Augmented Generation) architecture ensures responses are grounded strictly in internal SOPs, eliminating hallucinations.
-•	Security: Role-Based Access Control (RBAC) separates 'User' and 'Admin' privileges to prevent unauthorized actions.
+- Frontend: Streamlit with a custom 'Dockyard Console' theme, optimized for high visibility and ease of use in warehouse environments (gloved operation friendly).
+- Backend: Supabase (PostgreSQL) for relational management of logs, tickets, replacement history, and user roles.
+- AI Engine: Google Gemini (via LangChain) coupled with FAISS for Vector Search. This RAG (Retrieval-Augmented Generation) architecture ensures responses are grounded strictly in internal SOPs, eliminating hallucinations.
+- Security: Role-Based Access Control (RBAC) separates 'User' and 'Admin' privileges to prevent unauthorized actions.
 ________________________________________
 # 4. Core Features & Workflows
 1) Identity Gate & Security
@@ -52,23 +52,23 @@ o	Pending issues requiring follow-up.
 ________________________________________
 # 5. Role Alignment
 This project demonstrates the core competencies required for an IT Support Specialist:
-•	Infrastructure Mindset: Moves beyond "fixing things" to "managing systems" through structured escalation and severity classification.
-•	Warehouse Tech Proficiency: Specifically designed for logistics hardware (Zebra scanners, RF terminals) rather than just generic office IT.
-•	Operational Discipline: Implements standard operating procedures (SOPs) for handovers and asset management.
-•	Cost Awareness: Focuses on reducing call volume (Call Deflection) and minimizing unnecessary hardware expenditures.
+- Infrastructure Mindset: Moves beyond "fixing things" to "managing systems" through structured escalation and severity classification.
+- Warehouse Tech Proficiency: Specifically designed for logistics hardware (Zebra scanners, RF terminals) rather than just generic office IT.
+- Operational Discipline: Implements standard operating procedures (SOPs) for handovers and asset management.
+- Cost Awareness: Focuses on reducing call volume (Call Deflection) and minimizing unnecessary hardware expenditures.
 ________________________________________
 # 6. Qualitative Impact & Projected ROI
 Instead of vanity metrics, this system targets tangible operational improvements:
-•	Call Deflection: Projected to resolve ~54% of routine Level 1 inquiries (e.g., Wi-Fi, Password) without human intervention [6].
-•	Risk Mitigation: Digital shift reports aim to reduce handover-related operational errors by up to 75% [4].
-•	Productivity Gain: By streamlining information retrieval, the system reclaims the 10 hours/week typically lost to searching for answers [5], allowing staff to focus on core logistics tasks.
-•	Asset Control: Enforced approval workflows reduce inventory shrinkage and unnecessary device rotation.
+- Call Deflection: Projected to resolve ~54% of routine Level 1 inquiries (e.g., Wi-Fi, Password) without human intervention [6].
+- Risk Mitigation: Digital shift reports aim to reduce handover-related operational errors by up to 75% [4].
+- Productivity Gain: By streamlining information retrieval, the system reclaims the 10 hours/week typically lost to searching for answers [5], allowing staff to focus on core logistics tasks.
+- Asset Control: Enforced approval workflows reduce inventory shrinkage and unnecessary device rotation.
 ________________________________________
 # 7. Future Roadmap
-•	Integrations: Connect with ServiceNow or Zendesk APIs for seamless ticket synchronization.
-•	SSO Implementation: Integrate Azure AD or Okta for enterprise-grade authentication.
-•	Predictive Maintenance: Utilize log data to predict hardware failures before they disrupt operations.
-•	Inventory Link: Real-time connection to the asset management database for instant stock validation.
+- Integrations: Connect with ServiceNow or Zendesk APIs for seamless ticket synchronization.
+- SSO Implementation: Integrate Azure AD or Okta for enterprise-grade authentication.
+- Predictive Maintenance: Utilize log data to predict hardware failures before they disrupt operations.
+- Inventory Link: Real-time connection to the asset management database for instant stock validation.
 ________________________________________
 📎 References
 •	[1] ITIC (2024): "Hourly Cost of Downtime Survey" (90% of enterprises report >$300k cost per hour of downtime).
