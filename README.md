@@ -1,4 +1,4 @@
-# ait-support-de for ICB Group PTY LTD
+# ait-support for ICB Group PTY LTD
 
 [AIT Support] Final Project Report 
 Project Title: AIT Support (AI-Driven IT Infrastructure & Operations System)
