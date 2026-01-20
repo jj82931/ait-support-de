@@ -11,14 +11,14 @@ AIT Support bridges this gap by combining AI-driven triage with strict operation
 ________________________________________
 # 2. Problem Statement
 In a continuously operating warehouse, IT friction translates directly to business loss.
-•	Cost of Downtime: When critical hardware (scanners, label printers) fails, operations stop until IT arrives.
-o	Context: According to ITIC (2024), 90% of enterprises report that a single hour of downtime costs over $300,000, highlighting the financial criticality of rapid resolution [1].
-•	Inefficient Resource Allocation: Skilled IT staff are often bogged down by repetitive, low-value requests.
-o	Context: Gartner research indicates that up to 40% of all help desk calls are related to password resets and account lockouts [2]. Furthermore, Forrester estimates the labor cost for a single password reset incident at approximately $70 [3].
-•	Shift Handover Risks: Critical information is often lost between shifts, leading to recurring issues.
-o	Context: Studies show that 80% of serious operational errors involve miscommunication during shift handovers [4].
-•	Information Retrieval Waste: Workers spend excessive time searching for SOPs or manuals.
-o	Context: A recent Atlassian report reveals that Australian knowledge workers spend nearly 23.5% (approx. 10 hours) of their work week just searching for information [5].
+ •	Cost of Downtime: When critical hardware (scanners, label printers) fails, operations stop until IT arrives.
+ o	Context: According to ITIC (2024), 90% of enterprises report that a single hour of downtime costs over $300,000, highlighting the financial criticality of rapid resolution [1].
+ •	Inefficient Resource Allocation: Skilled IT staff are often bogged down by repetitive, low-value requests.
+ o	Context: Gartner research indicates that up to 40% of all help desk calls are related to password resets and account lockouts [2]. Furthermore, Forrester estimates the labor cost for a single password reset incident at approximately $70 [3].
+ •	Shift Handover Risks: Critical information is often lost between shifts, leading to recurring issues.
+ o	Context: Studies show that 80% of serious operational errors involve miscommunication during shift handovers [4].
+ •	Information Retrieval Waste: Workers spend excessive time searching for SOPs or manuals.
+ o	Context: A recent Atlassian report reveals that Australian knowledge workers spend nearly 23.5% (approx. 10 hours) of their work week just searching for information [5].
 ________________________________________
 # 3. Technical Architecture
 Built on a Modern Data Stack to ensure reliability, auditability, and scalability.
